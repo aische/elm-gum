@@ -2,6 +2,26 @@
 
 An Elm library with Generic Update and Message
 
+## Usage
+
+With elm-gum, you don't have to write your own message type and update function, you simply use the Msg type from elm-gum and its update function.
+
+There are four different messages than can be composed:
+
+```elm
+
+type Msg model
+    = Peek (model -> Msg model)
+    | Poke (model -> model) (Msg model)
+    | Call (Cmd (Msg model))
+    | End
+
+```
+
+Now you can write imperative looking code directly in your views!
+
+Note: This is an experiment and I think it does not fit well into the philosophy of Elm.
+
 ## Example
 
 ```elm
