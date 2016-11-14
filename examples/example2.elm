@@ -9,7 +9,7 @@ import Json.Decode exposing (Value, (:=))
 import Json.Decode as Json
 import Task
 
-import Gum exposing (..)
+import Gum.Msg exposing (..)
 
 main = App.program
   { init = init

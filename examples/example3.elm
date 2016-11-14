@@ -9,7 +9,7 @@ import Json.Decode exposing (Value, (:=))
 import Json.Decode as Json
 import Task
 
-import Gum exposing (..)
+import Gum.Msg exposing (..)
 import Gum.Action exposing (..)
 
 main = App.program
@@ -56,7 +56,7 @@ view model =
               liftTask Date.now `andThen` \result -> 
               case result of
                 Err e ->
-                  returnAction () 
+                  pureAction () 
                 Ok d ->
                   log ("start loading on " ++ toString d) `andThen` \_ -> 
                   load decodeItem "elm-package.json" `andThen` \result ->
@@ -67,7 +67,7 @@ view model =
                         liftTask Date.now `andThen` \result ->
                           case result of
                             Err e ->
-                              returnAction ()
+                              pureAction ()
                             Ok d ->
                               log ("loading succeeded on " ++ toString d) `andThen` \_ ->
                               updateModel (\m -> {m | item = Just value})

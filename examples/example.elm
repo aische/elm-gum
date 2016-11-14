@@ -8,7 +8,7 @@ import Random
 import Time exposing (Time)
 import Process
 
-import Gum exposing (..)
+import Gum.Msg exposing (..)
 
 main = App.program
   { init = init

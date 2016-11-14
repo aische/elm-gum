@@ -1,4 +1,4 @@
-module Gum exposing (..)
+module Gum.Msg exposing (Msg(..), update, task)
 
 {-|
 # Generic Message
@@ -19,6 +19,7 @@ type Msg model
     | Poke (model -> model) (Msg model)
     | Call (Cmd (Msg model))
     | End
+    | Fork (Msg model) (Msg model)
 
 
 {-| Use this update function as the main update function
@@ -41,6 +42,18 @@ update msg model =
             ( model
             , cmd
             )
+            
+        Fork msg1 msg2 ->
+            let
+                ( model1, cmd1 ) =
+                    update msg1 model 
+                
+                ( model2, cmd2 ) =
+                    update msg2 model1
+            in 
+                ( model2
+                , Cmd.batch [cmd1, cmd2]
+                )
 
 
 {-| Similar to Task.perform, but uses only one message expecting a (Result e a)
