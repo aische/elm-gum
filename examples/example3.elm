@@ -53,23 +53,23 @@ view model =
     [ button 
         [ onClick <| 
             runAction <|
-              liftTask Date.now `andThen` \result -> 
+              liftTask Date.now >>= \result -> 
               case result of
                 Err e ->
                   pureAction () 
                 Ok d ->
-                  log ("start loading on " ++ toString d) `andThen` \_ -> 
-                  load decodeItem "elm-package.json" `andThen` \result ->
+                  log ("start loading on " ++ toString d) >>= \_ -> 
+                  load decodeItem "elm-package.json" >>= \result ->
                     case result of
                       Err e ->
                         log ("loading failed")
                       Ok value ->
-                        liftTask Date.now `andThen` \result ->
+                        liftTask Date.now >>= \result ->
                           case result of
                             Err e ->
                               pureAction ()
                             Ok d ->
-                              log ("loading succeeded on " ++ toString d) `andThen` \_ ->
+                              log ("loading succeeded on " ++ toString d) >>= \_ ->
                               updateModel (\m -> {m | item = Just value})
         ] 
         [ text "load"
