@@ -37,6 +37,7 @@ view drag circle model =
     Svg.svg
       [ SA.width "500"
       , SA.height "400"
+      , A.style [("background-color", "#ffccee")]
       ]
       [ Svg.circle
           [ SA.cx (toString x)

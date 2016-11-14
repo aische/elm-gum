@@ -37,68 +37,73 @@ import Svg2
 
 view : Model -> Html (Msg Model)
 view model =
-  vlist
-    [ Counter.view counter model
-    , button 
-        [ onClick (runAction <| loadItem item)
-        ] 
-        [ text "ajax"
-        ]
-    , button 
-        [ onClick (runAction <| setModelAt item Nothing)
-        ] 
-        [ text "reset ajax"
-        ]
-    , Html.input 
-        [ A.value model.inputText
-        , onInput (runAction << setModelAt inputText)
-        ]
-        []
-    , Html.input 
-        [ A.value model.inputText
-        , onInput (runAction << setModelAt inputText)
-        ]
-        []
-    , MouseTracker.view track position model
-    , button 
-        [ onClick <| runAction <| forkActions
-          [ addRandomNumber randomNumbers "a"
-          , addRandomNumber randomNumbers "b"
-          , addRandomNumber randomNumbers "c"
-          , addRandomNumber randomNumbers "d"
-          , addRandomNumber randomNumbers "e"
+  div []
+  [
+    vlist
+      [ Counter.view counter model
+      , button 
+          [ onClick (runAction <| loadItem item)
+          ] 
+          [ text "ajax"
           ]
-        ] 
-        [ text "rand"
-        ]
-    , button 
-        [ onClick <| runAction <| forkActions
-          [ addRandomNumber randomNumbers "a"
-          , addRandomNumber randomNumbers "b"
-          , addRandomNumber randomNumbers "f"
-          , addRandomNumber randomNumbers "g"
-          , addRandomNumber randomNumbers "h"
+      , button 
+          [ onClick (runAction <| setModelAt item Nothing)
+          ] 
+          [ text "reset ajax"
           ]
-        ] 
-        [ text "rand"
-        ]
-    , button 
-        [ onClick <| runAction <| 
-          --load decodeItem "elm-package.json" >>=
-          load decodeItem "Lib.elm" >>=
-          onErrorAction (setModelAt inputText << toString) >>= \a ->
-          setModelAt item (Just a)
-        ] 
-        [ text "ajax that fails"
-        ]
-    , Svg1.view drag circle model
+      , Html.input 
+          [ A.value model.inputText
+          , onInput (runAction << setModelAt inputText)
+          ]
+          []
+      , Html.input 
+          [ A.value model.inputText
+          , onInput (runAction << setModelAt inputText)
+          ]
+          []
+      , MouseTracker.view track position model
+      , button 
+          [ onClick <| runAction <| forkActions
+            [ addRandomNumber randomNumbers "a"
+            , addRandomNumber randomNumbers "b"
+            , addRandomNumber randomNumbers "c"
+            , addRandomNumber randomNumbers "d"
+            , addRandomNumber randomNumbers "e"
+            ]
+          ] 
+          [ text "rand"
+          ]
+      , button 
+          [ onClick <| runAction <| forkActions
+            [ addRandomNumber randomNumbers "a"
+            , addRandomNumber randomNumbers "b"
+            , addRandomNumber randomNumbers "f"
+            , addRandomNumber randomNumbers "g"
+            , addRandomNumber randomNumbers "h"
+            ]
+          ] 
+          [ text "rand"
+          ]
+      , button 
+          [ onClick <| runAction <| 
+            --load decodeItem "elm-package.json" >>=
+            load decodeItem "Lib.elm" >>=
+            onErrorAction (setModelAt inputText << toString) >>= \a ->
+            setModelAt item (Just a)
+          ] 
+          [ text "ajax that fails"
+          ]
+      ]
+  , vlist
+    [ Svg1.view drag circle model
     , Svg2.view drag2 circles model
 
     , text (toString model)
     ]
+  ]
 
 vlist elems =
-  div []
+  div [ A.style [("display", "flex"), ("flex-flow", "row wrap")]]
   (
     List.map 
       (\e ->
