@@ -1,7 +1,6 @@
 module Main exposing(..)
 
 import Html exposing (Html, button, div, text)
-import Html.App as App
 import Html.Events exposing (onClick)
 import Task
 import Random
@@ -10,7 +9,7 @@ import Process
 
 import Gum.Msg exposing (..)
 
-main = App.program
+main = Html.program
   { init = init
   , view = view
   , update = update
@@ -71,7 +70,7 @@ randomInt : (Int, Int) -> (Int -> a) -> Cmd a
 randomInt (min, max) f = Random.generate f (Random.int min max)
 
 sleep : Time -> a -> Cmd a
-sleep t a = Task.perform (\x -> a) (\x -> a) (Process.sleep t)
+sleep t a = Task.perform (\x -> a) (Process.sleep t)
 
 -------------------------------------------------------------------------------
 

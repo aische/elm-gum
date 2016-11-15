@@ -2,17 +2,16 @@ module Main exposing(..)
 
 import Date exposing (Date)
 import Html exposing (Html, button, div, text)
-import Html.App as App
 import Html.Events exposing (onClick)
 import Http
-import Json.Decode exposing (Value, (:=))
+import Json.Decode exposing (Value)
 import Json.Decode as Json
 import Task
 
 import Gum.Msg exposing (..)
 import Gum.Action exposing (..)
 
-main = App.program
+main = Html.program
   { init = init
   , view = view
   , update = update
@@ -42,9 +41,9 @@ type alias Item =
 
 decodeItem : Json.Decoder Item
 decodeItem =
-  Json.object2 Item 
-    ("summary" := Json.string)
-    ("version" := Json.string)
+  Json.map2 Item 
+    (Json.field "summary" Json.string)
+    (Json.field "version" Json.string)
 
 view : Model -> Html (Msg Model)
 view model =
@@ -83,6 +82,7 @@ log s = updateModel (\m -> { m | log = s :: m.log } )
 
 load : Json.Decoder a -> String -> Action Model (Result Http.Error a)
 load decoder url =
-  liftTask (Http.get decoder url)
+  liftCommand (\cont -> Http.send cont (Http.get url decoder))
+  --liftTask (Http.get url decoder)
 
 
