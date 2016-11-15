@@ -35,8 +35,8 @@ update msg model =
         Peek f ->
             update (f model) model
 
-        Poke upd msg' ->
-            update msg' (upd model)
+        Poke upd msg1 ->
+            update msg1 (upd model)
 
         Call cmd ->
             ( model
@@ -60,4 +60,5 @@ update msg model =
 -}
 task : Task e a -> (Result e a -> Msg model) -> Cmd (Msg model)
 task t f =
-    Task.perform (f << Err) (f << Ok) t
+    --Task.perform (f << Err) (f << Ok) t
+    Task.attempt f t

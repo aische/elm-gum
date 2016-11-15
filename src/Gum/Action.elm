@@ -97,7 +97,7 @@ liftTask t =
 -}
 runCmd : Action model () -> Cmd (Msg model)
 runCmd (Action f) = 
-  Task.perform (always End) f (Task.succeed (always End))
+  Task.perform (always End) (Task.succeed (f (always End)))
   --Task.perform (always End) identity (Task.succeed (f (always End)))
 
 {-| Shortcut for mapAction
