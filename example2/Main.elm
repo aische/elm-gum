@@ -3,11 +3,10 @@ module Main exposing(..)
 import Date exposing (Date)
 import Dict exposing (Dict)
 import Html exposing (Html, button, div, text)
-import Html.App as App
 import Html.Attributes as A
 import Html.Events exposing (onClick, onInput)
 import Http
-import Json.Decode exposing (Value, (:=))
+import Json.Decode exposing (Value)
 import Json.Decode as Json
 import Monocle.Common exposing ((=>), maybe)
 import Monocle.Lens as Lens
@@ -34,7 +33,7 @@ import Svg1
 import Svg2
 
 
-main = App.program
+main = Html.program
   { init = init
   , view = view
   , update = update

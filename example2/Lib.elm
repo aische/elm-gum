@@ -1,7 +1,7 @@
 module Lib exposing (..)
 
 import Http
-import Json.Decode exposing (Value, (:=))
+import Json.Decode exposing (Value)
 import Json.Decode as Json
 
 import Monocle.Common exposing ((=>), maybe)
@@ -19,7 +19,7 @@ import Gum.Action exposing (..)
 -------------------------------------------------------------------------------
 load : Json.Decoder a -> String -> Action model (Result Http.Error a)
 load decoder url =
-  liftTask (Http.get decoder url)
+  liftCommand (\cont -> Http.send cont (Http.get url decoder))
 
 sleep : Float -> Action model ()
 sleep t = 

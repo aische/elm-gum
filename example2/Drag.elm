@@ -1,7 +1,7 @@
 module Drag exposing(..)
 
 import Dict exposing (Dict)
-import Json.Decode exposing (Value, (:=))
+import Json.Decode exposing (Value)
 import Json.Decode as Json
 import Monocle.Lens as Lens
 import Monocle.Lens exposing (Lens)

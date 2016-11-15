@@ -3,11 +3,10 @@ module MouseTracker exposing(..)
 import Date exposing (Date)
 import Dict exposing (Dict)
 import Html exposing (Html, button, div, text)
-import Html.App as App
 import Html.Attributes as A
 import Html.Events exposing (onClick, onInput, onCheck)
 import Http
-import Json.Decode exposing (Value, (:=))
+import Json.Decode exposing (Value)
 import Json.Decode as Json
 import Monocle.Common exposing ((=>), maybe)
 import Monocle.Lens as Lens
@@ -28,7 +27,7 @@ view : Lens m Bool -> Lens m (Maybe Position) -> m -> Html (Msg m)
 view track position model =
   div []
     [ Html.input 
-        [ A.type' "checkbox"
+        [ A.type_ "checkbox"
         , A.checked (track.get model)
         , onCheck (runAction << setTracking track position)
         ]

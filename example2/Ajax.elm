@@ -3,11 +3,10 @@ module Ajax exposing(..)
 import Date exposing (Date)
 import Dict exposing (Dict)
 import Html exposing (Html, button, div, text)
-import Html.App as App
 import Html.Attributes as A
 import Html.Events exposing (onClick, onInput)
 import Http
-import Json.Decode exposing (Value, (:=))
+import Json.Decode exposing (Value)
 import Json.Decode as Json
 import Monocle.Common exposing ((=>), maybe)
 import Monocle.Lens as Lens
@@ -34,9 +33,9 @@ type alias Item =
 
 decodeItem : Json.Decoder Item
 decodeItem =
-  Json.object2 Item 
-    ("summary" := Json.string)
-    ("version" := Json.string)
+  Json.map2 Item 
+    (Json.field "summary" Json.string)
+    (Json.field "version" Json.string)
 
 loadItem : Lens m (Maybe Item) -> Action m ()
 loadItem item = 
